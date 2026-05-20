@@ -161,8 +161,7 @@ public class PlayerController : MonoBehaviour
             if (coalNum > 0)
             {
                 Debug.Log("Player has coal");
-                progress.maxValue += coalNum;
-                progress.ResetBar();
+                progress.Increase(coalNum);
                 coalNum = 0f;
             }
 
@@ -170,9 +169,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Die()
+    {
+        PlayerController.Instance.gameObject.SetActive(false);
+    }
+
+    //Updates the light based on heat level. If gets to 0, dies.
     void updateLight()
     {
         flame.intensity = (progress.CurrentValue / progress.maxValue) * 50;
         flame.range = (progress.CurrentValue / progress.maxValue) * 50;
+
+        if (flame.intensity <= 0)
+        {
+            Die();
+        }
     }
 }
