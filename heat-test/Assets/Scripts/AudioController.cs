@@ -4,11 +4,12 @@ using UnityEngine;
 public class AudioController : MonoBehaviour
 {
     public static AudioController Instance;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource ambienceSource;
 
     // Ambience
     [SerializeField] private AudioClip furnaceRoom;
-
+    [SerializeField] private AudioClip cavernsArea;
     // Sound Effects
     [SerializeField] private AudioClip furnaceEnter;
     [SerializeField] private AudioClip playerJump;
@@ -17,15 +18,8 @@ public class AudioController : MonoBehaviour
     
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
+        //audioSource = GetComponent<AudioSource>();
     }
 
     public void PlaySound(string soundType)
@@ -34,25 +28,47 @@ public class AudioController : MonoBehaviour
         {
             // Ambience
             case "furnaceRoom":
-                audioSource.PlayOneShot(furnaceRoom);
+                if (!ambienceSource.isPlaying)
+                {
+                    ambienceSource.clip = furnaceRoom;
+                    ambienceSource.loop = true;
+                    ambienceSource.Play();
+                }
+                break;
+
+                 case "cavernsArea":
+                if (!ambienceSource.isPlaying)
+                {
+                    ambienceSource.clip = cavernsArea;
+                    ambienceSource.loop = true;
+                    ambienceSource.Play();
+                }
                 break;
 
             // Effects
             case "furnaceEnter":
-                audioSource.PlayOneShot(furnaceEnter);
+                sfxSource.PlayOneShot(furnaceEnter);
                 break;
             case "playerJump":
-                audioSource.PlayOneShot(playerJump);
+                sfxSource.PlayOneShot(playerJump);
                 break;
              case "oreMining":
-                audioSource.PlayOneShot(oreMining);
+                sfxSource.PlayOneShot(oreMining);
                 break;
             case "picPickup":
-                audioSource.PlayOneShot(picPickup);
+                sfxSource.PlayOneShot(picPickup);
                 break;
 
             default:
                 break;
+        }
+    }
+
+    public void StopSound(String soundName)
+    {
+        if (soundName == "furnaceRoom")
+        {
+            ambienceSource.Stop();
         }
     }
 }

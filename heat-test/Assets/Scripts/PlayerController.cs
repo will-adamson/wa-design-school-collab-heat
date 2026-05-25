@@ -171,7 +171,29 @@ public class PlayerController : MonoBehaviour
                 coalNum = 0f;
             }
 
+        }
 
+        // Furnace room box collider, turn on room ambience
+        if (other.gameObject.CompareTag("FurnaceRoom"))
+        {
+            AudioController.Instance.PlaySound("furnaceRoom");
+            Debug.Log("Furnace room collider works");
+        }
+        // Caverns Area box collider for ambience on
+        if (other.gameObject.CompareTag("CavernsArea"))
+        {
+            AudioController.Instance.PlaySound("cavernsArea");
+            Debug.Log("Caverns room collider works");
+        }
+        
+    }
+
+     public void OnTriggerExit(Collider other)
+    {
+        // Leave Furnace room 
+        if (other.gameObject.CompareTag("FurnaceRoom"))
+        {
+            AudioController.Instance.StopSound("furnaceRoom");
         }
     }
 

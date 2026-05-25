@@ -5,7 +5,7 @@ public class FuranceController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        AudioController.Instance.PlaySound("furnaceRoom");
+        //AudioController.Instance.PlaySound("furnaceRoom");
     }
     void Start()
     {
