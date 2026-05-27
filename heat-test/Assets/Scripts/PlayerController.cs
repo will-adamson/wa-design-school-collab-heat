@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player movement")]
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.8f;
     [SerializeField] private float jumpHeatMod;
@@ -16,12 +16,13 @@ public class PlayerController : MonoBehaviour
     [Header("Mineables and Furnace")]
 
     [SerializeField] public TextMeshProUGUI coalCounterText;
-    private float coalNum = 0f;
+    public float coalNum = 0f;
     [SerializeField] public float coalIncrement = 10f;
 
     [SerializeField] public TextMeshProUGUI saltCounterText;
     [SerializeField] public float saltIncrement = 10f;
-    private float saltNum = 0f;
+    [SerializeField] SaltController saltController;
+    public float saltNum = 0f;
 
     [SerializeField] public TextMeshProUGUI pickText;
     [SerializeField] public TextMeshProUGUI drillText;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public GameObject drill;
     [SerializeField] public bool hasPick = false;
     [SerializeField] public GameObject pick;
+    [SerializeField] public GameObject redWarning;
     [SerializeField] public Light flame;
     bool isInRange = false;
 
@@ -260,4 +262,5 @@ public class PlayerController : MonoBehaviour
             Die();
         }
     }
+
 }
