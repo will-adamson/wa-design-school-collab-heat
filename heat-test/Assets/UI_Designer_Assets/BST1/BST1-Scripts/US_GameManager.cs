@@ -124,31 +124,56 @@ public class US_GameManager : MonoBehaviour
     [SerializeField] private float maxY = 525f;
     private RectTransform fillChildRect;
     private bool fireOutTriggered = false;
-    [SerializeField] private float duration = 1f;
+    //[SerializeField] private float duration = 1f;
     [SerializeField] private TextMeshProUGUI countText;
-    private int currentCount = 100;
-    private float timer = 0f;
+    [SerializeField] private ProgressBarController progressBar;
+    //private int currentCount = 100;
+    //private float timer = 0f;
     private void Awake()
     {
         //countText.text = currentCount.ToString();
         fillChildRect = fireFillImage.transform.GetChild(0)
             .GetComponent<RectTransform>();
     }
-    private void Update()
+    private void OnEnable()
     {
-        // Timer accumulates time
-        timer += Time.deltaTime;
-
-        // When timer exceeds speed, decrease count
-        if (timer >= (1f / duration) && currentCount > 0)
+        if (progressBar != null)
         {
-            currentCount--; // Decrement count
-            countText.text = currentCount.ToString(); // Update text
-            FireDiesOut(currentCount); // Update UI
-            timer = 0f;     // Reset timer
-
+            progressBar.BarUpdate += UpdateFireUI;
         }
     }
+
+    private void OnDisable()
+    {
+        if (progressBar != null)
+        {
+            progressBar.BarUpdate -= UpdateFireUI;
+        }
+    }
+
+    private void UpdateFireUI()
+    {
+        float currentValue = progressBar.CurrentValue;
+
+        countText.text = currentValue.ToString("F0");
+
+        FireDiesOut(currentValue);
+    }
+    //private void Update()
+    //{
+    //    // Timer accumulates time
+    //    timer += Time.deltaTime;
+
+    //    // When timer exceeds speed, decrease count
+    //    if (timer >= (1f / duration) && currentCount > 0)
+    //    {
+    //        currentCount--; // Decrement count
+    //        countText.text = currentCount.ToString(); // Update text
+    //        FireDiesOut(currentCount); // Update UI
+    //        timer = 0f;     // Reset timer
+
+    //    }
+    //}
     public void FireDiesOut(float value)
     {
         // Clamp value
@@ -158,7 +183,7 @@ public class US_GameManager : MonoBehaviour
         // 100 = 0
         // 0 = 470
 
-        float normalized = 1f - (value / 100f);
+        float normalized = 1f - (value / progressBar.maxValue);
 
         float targetY = Mathf.Lerp(
             minY,

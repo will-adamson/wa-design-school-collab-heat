@@ -27,6 +27,7 @@ public class ProgressBarController : MonoBehaviour
     void Start()
     {
         CurrentValue = startValue;
+        BarUpdate?.Invoke();
         UpdateBar();
     }
 
@@ -35,7 +36,7 @@ public class ProgressBarController : MonoBehaviour
         if (limitReachedIndicator != null)
             limitReachedIndicator.SetActive(CurrentValue >= maxValue);
 
-        valueText.SetText($"{CurrentValue.ToString("F0")}/{maxValue}");
+        valueText.SetText($"{CurrentValue.ToString("F0")}");
     }
 
     private void OnEnable()
