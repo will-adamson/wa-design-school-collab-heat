@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player movement")]
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.8f;
     [SerializeField] private float jumpHeatMod;
@@ -16,12 +16,13 @@ public class PlayerController : MonoBehaviour
     [Header("Mineables and Furnace")]
 
     [SerializeField] public TextMeshProUGUI coalCounterText;
-    private float coalNum = 0f;
+    public float coalNum = 0f;
     [SerializeField] public float coalIncrement = 10f;
 
     [SerializeField] public TextMeshProUGUI saltCounterText;
     [SerializeField] public float saltIncrement = 10f;
-    private float saltNum = 0f;
+    [SerializeField] SaltController saltController;
+    public float saltNum = 0f;
 
     [SerializeField] public TextMeshProUGUI pickText;
     [SerializeField] public TextMeshProUGUI drillText;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public GameObject drill;
     [SerializeField] public bool hasPick = false;
     [SerializeField] public GameObject pick;
+    [SerializeField] public GameObject redWarning;
     [SerializeField] public Light flame;
     bool isInRange = false;
 
@@ -72,9 +74,6 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
-        Debug.Log($"Current Heat: {progress.CurrentValue}");
-        Debug.Log($"Max Heat: {progress.maxValue}");
-        Debug.Log($"Light Intensity: {flame.intensity}");
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -86,8 +85,10 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         //Debug.Log($"Jumping: {context.performed} - Is Grounded: {controller.isGrounded}");
-        if(context.performed && controller.isGrounded)
+        if (context.performed && controller.isGrounded)
         {
+            AudioController.Instance.PlaySound("playerJump");
+
             Debug.Log("Jumped!");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        Debug.Log("Interact pressed");
         Debug.Log("Hit Interact Button");
 
         if (!context.performed) return;
@@ -107,6 +109,7 @@ public class PlayerController : MonoBehaviour
         //Coal
         if (currentInteractable.CompareTag("Coal") && hasPick && isInRange)
         {
+            AudioController.Instance.PlaySound("oreMining");
             coalNum += coalIncrement;
             CoalController coalController = currentInteractable.GetComponent<CoalController>();
             coalController.totalCoal -= coalIncrement;
@@ -120,9 +123,10 @@ public class PlayerController : MonoBehaviour
         //Salt
         else if (currentInteractable.CompareTag("Salt") && hasPick && isInRange)
         {
+            AudioController.Instance.PlaySound("oreMining");
             saltNum += saltIncrement;
             SaltController saltController = currentInteractable.GetComponent<SaltController>();
-            saltController.totalSalt -= coalIncrement; 
+            saltController.totalSalt -= saltIncrement;
 
             if (saltController.totalSalt <= 0)
             {
@@ -135,6 +139,7 @@ public class PlayerController : MonoBehaviour
         {
             if (coalNum > 0)
             {
+                AudioController.Instance.PlaySound("furnaceEnter");
                 progress.Increase(coalNum);
                 coalNum = 0f;
             }
@@ -189,7 +194,7 @@ public class PlayerController : MonoBehaviour
         }
 
         updateLight();
-        
+
     }
 
 
@@ -222,6 +227,24 @@ public class PlayerController : MonoBehaviour
                 progress.Increase(coalNum);
                 coalNum = 0f;
             }
+        }
+
+        // Furnace room ambience
+        if (other.gameObject.CompareTag("FurnaceRoom"))
+        {
+            AudioController.Instance.StopSound("cavernsArea");
+            AudioController.Instance.PlaySound("furnaceRoom");
+
+            Debug.Log("Furnace room collider works");
+        }
+
+        // Cavern ambience
+        else if (other.gameObject.CompareTag("CavernsArea"))
+        {
+            AudioController.Instance.StopSound("furnaceRoom");
+            AudioController.Instance.PlaySound("cavernsArea");
+
+            Debug.Log("Caverns room collider works");
         }
     }
 
@@ -260,4 +283,5 @@ public class PlayerController : MonoBehaviour
             Die();
         }
     }
+
 }
