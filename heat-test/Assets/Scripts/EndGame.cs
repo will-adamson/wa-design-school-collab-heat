@@ -2,6 +2,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 
+
+// Purpose: Displays the end game canvas when the player reaches the trigger zone.
+
 public class EndGame : MonoBehaviour
 {
     [SerializeField] GameObject canvas;

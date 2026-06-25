@@ -1,6 +1,8 @@
 using UnityEngine;
 
-//Most of this is from a tutorial I followed. Linked in my technical reflection doc.
+// Author: Will
+// Purpose: Cuts a hole in walls between the camera and the player to keep the player visible.
+// Most of this is from a tutorial I followed. Linked in my technical reflection doc.
 public class CutoutObject : MonoBehaviour
 {
     [SerializeField]

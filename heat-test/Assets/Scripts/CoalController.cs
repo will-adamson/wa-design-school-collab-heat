@@ -1,5 +1,8 @@
 using UnityEngine;
 
+// Author: Will
+// Purpose: Tracks and manages coal resources, destroying the object when depleted.
+
 public class CoalController : MonoBehaviour
 {
     [SerializeField] public float totalCoal;

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+// Author: Matt
+// Purpose: Handles purchasing upgrades using salt, currently supporting a movement speed upgrade.
+
 public class UpgradeController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;

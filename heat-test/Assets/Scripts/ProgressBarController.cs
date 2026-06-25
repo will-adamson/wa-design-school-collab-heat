@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Author: Will
+// Purpose: Singleton that manages a UI progress bar, supporting increase, decrease, and reset of a tracked value.
+
 public class ProgressBarController : MonoBehaviour
 {
     [Header("Progress Bar Settings")]

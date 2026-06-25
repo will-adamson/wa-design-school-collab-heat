@@ -3,6 +3,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Purpose: Core player script handling movement, jumping, mining, item pickup, resource tracking, and heat management.
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Player movement")]

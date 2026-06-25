@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Author: Will
+// Purpose: Handles scene loading, reloading, and quitting the application.
+
 public class SceneController : MonoBehaviour
 {
     //0 = test scene 1 = main menu scene

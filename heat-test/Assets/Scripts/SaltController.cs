@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// Purpose: Tracks and manages salt resources, destroying the object when depleted.
+
 public class SaltController : MonoBehaviour
 {
     [SerializeField] public float totalSalt;

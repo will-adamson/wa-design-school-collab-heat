@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+// Author: Jay
+// Purpose: Singleton that manages master volume control, persisting the player's audio preferences across sessions.
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;

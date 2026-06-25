@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+// Author: Jay
+// Purpose: Singleton that manages and plays all sound effects and ambience in the game.
+
 public class AudioController : MonoBehaviour
 {   
     // Controllers

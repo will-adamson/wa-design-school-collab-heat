@@ -1,5 +1,8 @@
 using UnityEngine;
 
+
+// Purpose: Handles item pickup logic for the drill and pickaxe when the player walks over them.
+
 public class ItemPickUp : MonoBehaviour
 {
     [SerializeField] public bool isDrill;

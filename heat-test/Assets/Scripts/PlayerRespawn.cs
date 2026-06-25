@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-//Track the players position while standing on the ground so when they die from a deathpit, they just respawn at the top
-
+// Author: Will
+// Purpose: Periodically saves the player's position and respawns them there if they fall into a death pit.
 public class PlayerRespawn : MonoBehaviour
 {
     [SerializeField] private float checkInterval = 2f;

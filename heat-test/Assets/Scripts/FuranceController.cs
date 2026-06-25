@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// Author: Will
+// Purpose: Displays the furnace UI canvas when the player enters the furnace trigger zone.
 public class FuranceController : MonoBehaviour
 {
     public GameObject canvas;

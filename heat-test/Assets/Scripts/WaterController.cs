@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Purpose: Drains the player's heat when they enter water, with a visual warning indicator.
 public class WaterController : MonoBehaviour
 {
     Image waterWarning;
